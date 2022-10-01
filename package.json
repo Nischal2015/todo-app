@@ -4,6 +4,10 @@
   "description": "Simple to-do app made using Solidity and ReactJs",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "deploy:default": "yarn hardhat run scripts/deploy.ts",
+    "deploy": "yarn hardhat run scripts/deploy.ts --network goerli"
+  },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",
     "@ethersproject/providers": "^5.4.7",
