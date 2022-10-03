@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.17;
 
 contract TaskContract {
     event AddTask(address recipient, uint16 taskId);
@@ -73,13 +73,14 @@ contract TaskContract {
     ) external {
         tasks[_taskId].taskTitle = _taskTitle;
         tasks[_taskId].taskDescription = _taskDescription;
+        emit UpdateTask(msg.sender, _taskTitle, _taskDescription);
     }
 
     // Delete a task
-    function deleteTask(uint16 _taskId, bool _isDeleted) external {
+    function deleteTask(uint16 _taskId) external {
         if (taskToOwner[_taskId] == msg.sender) {
-            tasks[_taskId].isDeleted = _isDeleted;
-            emit DeleteTask(_taskId, _isDeleted);
+            tasks[_taskId].isDeleted = true;
+            emit DeleteTask(_taskId, true);
         }
     }
 }
