@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+/**
+ * @author  Nischal Shakya
+ * @title   A smart contract for to-do app
+ * @notice  You can use this contract for the basic to-do functionality
+ */
 contract TaskContract {
     event AddTask(address recipient, uint16 taskId);
     event DeleteTask(uint16 taskId, bool isDeleted);
@@ -21,9 +26,11 @@ contract TaskContract {
 
     mapping(uint16 => address) taskToOwner;
 
-    // FUNCTIONS
-
-    // Get all the tasks
+    /**
+     * @notice  Returns all the to-dos
+     * @dev     Return array of Task[].
+     * @return  Returns all the to-dos
+     */
     function getTasks() external view returns (Task[] memory) {
         Task[] memory tempTasks = new Task[](tasks.length);
         uint16 counter = 0;
@@ -41,7 +48,12 @@ contract TaskContract {
         return actualTasks;
     }
 
-    // Add a new task
+    /**
+     * @notice  Adds new to-do
+     * @param   _taskTitle The title of the to-do
+     * @param   _taskDescription The description of the to-do  .
+     * @param   _isDeleted Indicates whether the to-do is deleted or not
+     */
     function addTask(
         string memory _taskTitle,
         string memory _taskDescription,
@@ -60,12 +72,21 @@ contract TaskContract {
         emit AddTask(msg.sender, _taskId);
     }
 
-    // Get a single task
+    /**
+     * @notice  Get the specified to-do
+     * @param   _taskId  The unique identifier of the to-do
+     * @return  Task according to the specified _taskId  .
+     */
     function getTask(uint16 _taskId) external view returns (Task memory) {
         return tasks[_taskId];
     }
 
-    // Update a task
+    /**
+     * @notice  Update the specified to-do
+     * @param   _taskId  The unique identifier of the to-do
+     * @param   _taskTitle The title of the to-do
+     * @param   _taskDescription The description of the to-do  .
+     */
     function updateTask(
         uint16 _taskId,
         string memory _taskTitle,
@@ -76,7 +97,10 @@ contract TaskContract {
         emit UpdateTask(msg.sender, _taskTitle, _taskDescription);
     }
 
-    // Delete a task
+    /**
+     * @notice  Deletes the specific task
+     * @param   _taskId  The unique identifier of the to-do
+     */
     function deleteTask(uint16 _taskId) external {
         if (taskToOwner[_taskId] == msg.sender) {
             tasks[_taskId].isDeleted = true;
